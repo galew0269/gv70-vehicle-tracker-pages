@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>GV70 Lease Tracker</title>
+  <meta name="description" content="Mobile-friendly tracker for 2026 Genesis Electrified GV70 lease offers, refreshed daily from public sources." />
+  <meta name="theme-color" content="#01696f" />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero" id="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16L10 6l4 6 6-8"/><path d="M4 18h16"/></svg>
+        </div>
+        <div class="title">
+          <h1>GV70 lease tracker</h1>
+          <p>Daily snapshot of 2026 Electrified GV70 lease offers, optimized for Chrome on Android and desktop.</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="chip">Feed updated <strong id="updatedLabel">Loading…</strong></span>
+        <button class="btn btn-primary" id="refreshDeals" type="button">Reload feed</button>
+        <button class="btn btn-soft" id="themeToggle" type="button">Dark mode</button>
+      </div>
+      <div class="banner" id="feedBanner" hidden></div>
+    </section>
+
+    <section class="section" id="offers">
+      <div class="section-head">
+        <div>
+          <h2>Lease snapshots</h2>
+          <p>Cards reflect the latest values in the feed. Tap any card source to open the underlying public page.</p>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <article class="card metric-card" style="--accent:var(--color-primary)">
+          <div class="eyebrow">Best official</div>
+          <div class="metric" id="bestOfficial">$0</div>
+          <div class="sub" id="officialSub">— months · $0 due</div>
+        </article>
+        <article class="card metric-card" style="--accent:var(--color-blue)">
+          <div class="eyebrow">Market average</div>
+          <div class="metric" id="marketAvg">$0</div>
+          <div class="sub" id="marketSub">— months reference</div>
+        </article>
+        <article class="card metric-card" style="--accent:var(--color-success)">
+          <div class="eyebrow">Lowest tracked</div>
+          <div class="metric" id="lowestTracked">$0</div>
+          <div class="sub" id="lowestSource">—</div>
+        </article>
+        <article class="card metric-card" style="--accent:var(--color-purple)">
+          <div class="eyebrow">Change alerts</div>
+          <div class="metric" id="alertCount">0</div>
+          <div class="sub" id="lastRefresh">No changes yet</div>
+        </article>
+      </div>
+      <div class="offer-list" id="offerGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section" id="market">
+      <div class="section-head">
+        <div>
+          <h2>Payment comparison</h2>
+          <p>Visual snapshot of monthly payments across each tracked source.</p>
+        </div>
+      </div>
+      <div class="card"><div class="chart-wrap"><canvas id="offerChart"></canvas></div></div>
+    </section>
+
+    <section class="section" id="changes">
+      <div class="section-head">
+        <div>
+          <h2>Change log</h2>
+          <p>Differences between this load and the previous in-browser snapshot.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table" id="changeTable">
+            <thead>
+              <tr><th scope="col">Source</th><th scope="col">Previous</th><th scope="col">Current</th><th scope="col">Delta</th><th scope="col">Detected</th></tr>
+            </thead>
+            <tbody id="changeLog">
+              <tr><td colspan="5" class="muted-row">No changes detected yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="status">
+      <div class="section-head">
+        <div>
+          <h2>Source health</h2>
+          <p>Active sources contributed to the latest feed run. Stale sources may need updater maintenance.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data-table" id="statusTableWrap">
+            <thead>
+              <tr><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Link</th></tr>
+            </thead>
+            <tbody id="statusTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="planner">
+      <div class="section-head">
+        <div>
+          <h2>Buy planner</h2>
+          <p>Plug in your target purchase numbers to estimate financed amount and recommended watch window.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="form-grid">
+          <div class="field">
+            <label for="targetMonth">Target buy month</label>
+            <select id="targetMonth">
+              <option>January 2027</option>
+              <option>February 2027</option>
+              <option selected>March 2027</option>
+              <option>April 2027</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="targetPrice">Target purchase price</label>
+            <input id="targetPrice" type="number" inputmode="numeric" value="47500" min="0" />
+          </div>
+          <div class="field">
+            <label for="downPayment">Down payment</label>
+            <input id="downPayment" type="number" inputmode="numeric" value="8000" min="0" />
+          </div>
+          <div class="field">
+            <label for="moveReserve">Move reserve</label>
+            <input id="moveReserve" type="number" inputmode="numeric" value="7000" min="0" />
+          </div>
+        </div>
+        <div class="summary">
+          <div class="summary-row"><span>Estimated financed amount</span><strong id="financedAmount">$39,500</strong></div>
+          <div class="summary-row"><span>Total cash target</span><strong id="cashTarget">$15,000</strong></div>
+          <div class="summary-row"><span>Recommended watch window</span><strong id="watchWindow">Dec 2026 to Mar 2027</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-head">
+        <div>
+          <h2>Direct source links</h2>
+          <p>Tap to open the live public page in a new tab.</p>
+        </div>
+      </div>
+      <div class="offer-list" id="sourceList"></div>
+    </section>
+
+    <footer class="page-footer">
+      <p>This tracker is a static GitHub Pages site. Feed refreshes are best-effort; if a source page changes structure, last-known values are retained.</p>
+    </footer>
+  </main>
+
+  <nav class="footer-nav" aria-label="Section navigation">
+    <a href="#top" class="active">Top</a>
+    <a href="#offers">Offers</a>
+    <a href="#market">Chart</a>
+    <a href="#planner">Planner</a>
+  </nav>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
