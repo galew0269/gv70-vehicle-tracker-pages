@@ -1,9 +1,15 @@
 {
   "meta": {
-    "updated_at": "2026-05-07T14:00:00Z",
+    "updated_at": "2026-05-12T15:11:58Z",
     "vehicle": "2026 Genesis Electrified GV70",
     "currency": "USD",
-    "notes": "Sample/fallback feed. Updater script may refresh values from public lease pages. If parsing fails for a source, the previous record is retained."
+    "notes": "Sample/fallback feed. Updater script may refresh values from public lease pages. If parsing fails for a source, the previous record is retained.",
+    "last_run_summary": [
+      "Genesis: parse returned nothing; kept previous values",
+      "KBB: fetch failed; kept previous values",
+      "TrueCar: fetch failed; kept previous values",
+      "Edmunds: fetch failed; kept previous values"
+    ]
   },
   "offers": [
     {
@@ -16,7 +22,7 @@
       "miles_per_year": 10000,
       "apr_offer": "Featured factory lease",
       "url": "https://www.genesis.com/us/en/offers/electrified-gv70",
-      "status": "active"
+      "status": "stale (parse failed)"
     },
     {
       "source": "KBB",
@@ -28,7 +34,7 @@
       "miles_per_year": 10000,
       "apr_offer": "Lower trim example",
       "url": "https://www.kbb.com/genesis/electrified-gv70/deals-incentives/",
-      "status": "active"
+      "status": "stale (fetch failed)"
     },
     {
       "source": "TrueCar",
@@ -40,7 +46,7 @@
       "miles_per_year": 10000,
       "apr_offer": "36-month national average",
       "url": "https://www.truecar.com/genesis/electrified-gv70/lease/",
-      "status": "active"
+      "status": "stale (fetch failed)"
     },
     {
       "source": "Edmunds",
@@ -52,13 +58,29 @@
       "miles_per_year": 10000,
       "apr_offer": "Higher dealer-listed examples",
       "url": "https://www.edmunds.com/genesis-electrified-gv70-lease-deals/",
-      "status": "active"
+      "status": "stale (fetch failed)"
     }
   ],
   "sources": [
-    {"key": "genesis", "label": "Genesis", "url": "https://www.genesis.com/us/en/offers/electrified-gv70"},
-    {"key": "kbb", "label": "Kelley Blue Book", "url": "https://www.kbb.com/genesis/electrified-gv70/deals-incentives/"},
-    {"key": "truecar", "label": "TrueCar", "url": "https://www.truecar.com/genesis/electrified-gv70/lease/"},
-    {"key": "edmunds", "label": "Edmunds", "url": "https://www.edmunds.com/genesis-electrified-gv70-lease-deals/"}
+    {
+      "key": "genesis",
+      "label": "Genesis",
+      "url": "https://www.genesis.com/us/en/offers/electrified-gv70"
+    },
+    {
+      "key": "kbb",
+      "label": "Kelley Blue Book",
+      "url": "https://www.kbb.com/genesis/electrified-gv70/deals-incentives/"
+    },
+    {
+      "key": "truecar",
+      "label": "TrueCar",
+      "url": "https://www.truecar.com/genesis/electrified-gv70/lease/"
+    },
+    {
+      "key": "edmunds",
+      "label": "Edmunds",
+      "url": "https://www.edmunds.com/genesis-electrified-gv70-lease-deals/"
+    }
   ]
 }
