@@ -1,13 +1,13 @@
 {
   "meta": {
-    "updated_at": "2026-06-30T16:00:28Z",
+    "updated_at": "2026-07-01T16:03:04Z",
     "vehicle": "2026 Genesis Electrified GV70",
     "currency": "USD",
     "notes": "Sample/fallback feed. Updater script may refresh values from public lease pages. If parsing fails for a source, the previous record is retained.",
     "last_run_summary": [
       "Genesis: parse returned nothing; kept previous values",
       "KBB: fetch failed; kept previous values",
-      "TrueCar: fetch failed; kept previous values",
+      "TrueCar: ok ($923/mo, 36 mo, $2000 due)",
       "Edmunds: fetch failed; kept previous values"
     ]
   },
@@ -40,13 +40,13 @@
       "source": "TrueCar",
       "trim": "Market average",
       "type": "Third-party benchmark",
-      "monthly_payment": 894,
+      "monthly_payment": 923,
       "term_months": 36,
       "due_at_signing": 2000,
       "miles_per_year": 10000,
       "apr_offer": "36-month national average",
       "url": "https://www.truecar.com/genesis/electrified-gv70/lease/",
-      "status": "stale (fetch failed)"
+      "status": "active"
     },
     {
       "source": "Edmunds",
