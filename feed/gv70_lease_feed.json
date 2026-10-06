@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-10-05T21:15:33Z",
+    "updated_at": "2026-10-06T18:58:02Z",
     "vehicle": "2026 Genesis Electrified GV70",
     "currency": "USD",
     "notes": "Sample/fallback feed. Updater script may refresh values from public lease pages. If parsing fails for a source, the previous record is retained.",
